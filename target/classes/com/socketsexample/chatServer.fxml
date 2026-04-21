@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="panelBase" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00DCFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.socketsexample.ServerController">
+   <children>
+      <TextArea id="text-area" fx:id="cajaTexto" layoutX="29.0" layoutY="333.0" onKeyPressed="#keyHandlers" prefHeight="13.0" prefWidth="372.0" promptText="Escribe Mensaje" style="-fx-background-radius: 30 30 30 30; -fx-border-radius: 30 30 30 30; -fx-border-color: white; -fx-background-color: white;" stylesheets="@estilo.css">
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="botonEnviar" layoutX="422.0" layoutY="333.0" mnemonicParsing="false" onAction="#enviarMensaje" prefHeight="41.0" prefWidth="164.0" styleClass="boton" stylesheets="@estilo.css" text="Enviar" textFill="WHITE">
+         <font>
+            <Font name="Microsoft Tai Le" size="15.0" />
+         </font>
+      </Button>
+      <TextArea id="text-area" fx:id="cajaDeMensajes" depthTest="DISABLE" editable="false" layoutX="29.0" layoutY="23.0" prefHeight="292.0" prefWidth="555.0" style="-fx-background-color: white;" stylesheets="@estilo.css" />
+   </children>
+</Pane>

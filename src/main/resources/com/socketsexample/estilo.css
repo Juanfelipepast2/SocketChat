@@ -1,0 +1,39 @@
+.boton {
+    -fx-background-color: rgb(0, 114, 143);
+    background-color: 0;
+}
+
+
+.boton:hover {
+    -fx-background-color: rgb(0, 75, 94);
+    background-color: 0;
+}
+
+.boton:pressed{
+    -fx-background-color: rgb(255, 255, 255);
+    background-color: 0;
+}
+
+
+.text-area{
+    text-align: center;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+    background-color: 0;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    background-color: 0;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    background-color: 0;
+}
+
+
+.text-field{
+    
+
+}
