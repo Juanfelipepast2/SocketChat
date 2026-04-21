@@ -16,7 +16,7 @@ public class Cliente {
     public Cliente(Usuario usr, ChatController ct) {
         try {
             this.usr = usr;
-            this.socketCliente = new Socket(usr.getIp(), 1024);
+            this.socketCliente = new Socket(usr.getIp(), 12345);
 
             this.salida = new ObjectOutputStream(socketCliente.getOutputStream());
             this.controlador = ct;

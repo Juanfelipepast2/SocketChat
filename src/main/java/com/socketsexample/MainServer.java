@@ -8,20 +8,27 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.socketsexample.Modelo.Server;
+
 /**
  * JavaFX App
  */
 public class MainServer extends Application {
 
     private static Scene scene;
+    private Server sv;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("chatServer"));                
-        ServerController sc = new ServerController();
-        sc.initialize();
+        sv = new Server();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainServer.class.getResource("chatServer.fxml"));
+        Parent root = fxmlLoader.load();
+        scene = new Scene(root);
+        ServerController sc = fxmlLoader.getController();
+        
         stage.setTitle("Servidor");
         stage.setScene(scene);
+        sc.init(sv);
         stage.show();
     }
 
@@ -30,12 +37,13 @@ public class MainServer extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainCliente.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainServer.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
         launch();
     }
+
 
 }

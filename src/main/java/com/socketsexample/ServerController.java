@@ -13,6 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
+
+
 public class ServerController{
 
     @FXML
@@ -75,9 +77,10 @@ public class ServerController{
     }
 
 
-    public void initialize(){
+    public void init(Server server) {
         try {
-            sv = new Server(this);    
+            sv = server;    
+            actualizarMensajes();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,4 +89,25 @@ public class ServerController{
 
 
 
+
+    public void actualizarMensajes() {
+        try {
+            Thread t = new Thread("actualizacion de mensajes") {
+                @Override
+                public void run() {
+                    while (true) {
+                        
+                        String ultimoMensaje = sv.getUltimoMensaje();
+                        if (ultimoMensaje != null) {
+                            agregar(ultimoMensaje);
+                        }
+                    }
+                }
+            };
+            t.setDaemon(true);
+            t.start();                                                            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
