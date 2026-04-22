@@ -6,6 +6,9 @@ import java.net.Socket;
 
 import com.socketsexample.ChatController;
 
+
+//TODO: EL CLIENTE DEBE MANEJARSE SOLO, NO DEBE TENER REFERENCIA AL CONTROLADOR, SOLO DEBE ENVIAR LOS MENSAJES Y RECIBIRLOS,
+//TODO  EL CONTROLADOR DEBE SER EL ENCARGADO DE MOSTRAR LOS MENSAJES EN LA INTERFAZ GRAFICA
 public class Cliente {
     private ChatController controlador;
     private Usuario usr;

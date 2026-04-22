@@ -80,7 +80,9 @@ public class ServerController{
     public void init(Server server) {
         try {
             sv = server;    
-            actualizarMensajes();
+            Thread actualizarMensajes = actualizarMensajes();
+            actualizarMensajes.start();
+            sv.Conectar();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,9 +92,10 @@ public class ServerController{
 
 
 
-    public void actualizarMensajes() {
+    public Thread actualizarMensajes() {
+        Thread t = null;
         try {
-            Thread t = new Thread("actualizacion de mensajes") {
+            t = new Thread("actualizacion de mensajes") {
                 @Override
                 public void run() {
                     while (true) {
@@ -101,13 +104,21 @@ public class ServerController{
                         if (ultimoMensaje != null) {
                             agregar(ultimoMensaje);
                         }
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            return;
+                        }
+                        
                     }
                 }
             };
             t.setDaemon(true);
-            t.start();                                                            
+                                                                    
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return t;
+
     }
 }

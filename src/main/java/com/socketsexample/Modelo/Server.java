@@ -32,17 +32,21 @@ public class Server{
     }
 
     public Server() {
+        this.bufferChat = new BufferChat();
+    }
+
+    public void Conectar() {
 
         try {            
             mensajes = new java.util.ArrayList<>();
             //this.controlador = controller;
-            this.socketServidor = new ServerSocket(12345);
-            mensajes.add("Server: Servidor iniciado en el puerto " + socketServidor.getLocalPort());        
-            //this.controlador.agregar("Server: Bienvenido");
-            this.bufferChat = new BufferChat();
-            System.out.println("Todo correcto");      
+            this.socketServidor = new ServerSocket(12345);                
+            //this.controlador.agregar("Server: Bienvenido");            
+            
             Thread conex = detectarConexion();
             conex.start();
+            this.bufferChat.agregarMensaje("Server: Servidor iniciado en el puerto " + socketServidor.getLocalPort());
+            System.out.println("Todo correcto");      
             
             
         } catch (Exception e) {
@@ -51,9 +55,6 @@ public class Server{
 
     }
 
-    public ArrayList<String> getMensajes() {
-        return mensajes;
-    }
 
     public void enviarMensaje(String mensaje) {
         try {
@@ -99,7 +100,7 @@ public class Server{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        t.setDaemon(true);
         return t;
     }
 
@@ -153,6 +154,7 @@ public class Server{
 
     private void desconectar(ConexionCliente conexion) {
         synchronized (clientes) {
+            
             clientes.remove(conexion);
         }
         try {
@@ -180,30 +182,33 @@ class BufferChat{
     private Queue<String> mensajes;
 
     public BufferChat() {
-        mensajes = new LinkedList<>();
-
+        mensajes = new LinkedList<>();        
     }
 
     public void agregarMensaje(String mensaje) {
-        mensajes.add(mensaje);
-        try {
-            this.notifyAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        
+        synchronized (mensajes) {
+            mensajes.add(mensaje);
+            try {
+                mensajes.notify();
+            } catch (Exception e) {
+                e.printStackTrace();
+                
+            }
         }
     }
 
-    public synchronized String recibirMensaje() {
+    public String recibirMensaje() {
 
-        while (mensajes.isEmpty()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                return null;
-            }
+        synchronized (mensajes) {
+            while (mensajes.isEmpty()) {
+                try {
+                    mensajes.wait();
+                } catch (InterruptedException e) {
+                    return null;
+                }
+            }        
+            return mensajes.poll();
         }
-        return mensajes.poll();
     }
 
 

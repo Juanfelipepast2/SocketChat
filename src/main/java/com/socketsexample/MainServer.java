@@ -20,7 +20,6 @@ public class MainServer extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        sv = new Server();
         FXMLLoader fxmlLoader = new FXMLLoader(MainServer.class.getResource("chatServer.fxml"));
         Parent root = fxmlLoader.load();
         scene = new Scene(root);
@@ -28,6 +27,7 @@ public class MainServer extends Application {
         
         stage.setTitle("Servidor");
         stage.setScene(scene);
+        sv = new Server();
         sc.init(sv);
         stage.show();
     }
